@@ -7,20 +7,23 @@ import {
 	Toolbar,
 	Typography,
 } from "@material-ui/core";
+import useStyles from "../utils/styles";
 
 const Layout = ({ children }) => {
+  const classes = useStyles();
+
 	return (
 		<div>
 			<Head>
 				<title>Veg-Fruits</title>
 			</Head>
-			<AppBar position="static">
+			<AppBar position="static" className={classes.navbar}>
 				<Toolbar>
 					<Typography>Veg Fruits</Typography>
 				</Toolbar>
 			</AppBar>
-			<Container>{children}</Container>
-			<footer>
+			<Container className={classes.main}>{children}</Container>
+			<footer className={classes.footer}>
 				<Typography>All right reserved by Minhazul Abedin.</Typography>
 			</footer>
 		</div>
