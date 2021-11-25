@@ -6,11 +6,23 @@ const useStyles = makeStyles({
     color: 'white',
     fontWeight: 800,
     '& a': {
-      color: '',
+      color: 'white',
+      margin: '0 5px',
+      fontSize: '20px',
+      textDecoration: 'none'
     }
   },
+  brand: {
+    textDecoration: 'none',
+    color: 'greenyellow',
+    fontSize: 30,
+    fontWeight: 'bold',
+    fontFamily: 'cursive',
+  },
+  grow: {
+    flexGrow: 1,
+  },
   main: {
-    color: 'gray',
     height: '85vh',
   },
   footer: {
