@@ -12,6 +12,7 @@ import {
 	Toolbar,
 	Typography,
 	Switch,
+	Badge,
 } from "@material-ui/core";
 import useStyles from "../utils/styles";
 import { Store } from "../utils/Store";
@@ -20,7 +21,7 @@ import Cookies from "js-cookie";
 
 const Layout = ({ title, description, children }) => {
 	const { state, dispatch } = useContext(Store);
-	const { darkMode } = state;
+	const { darkMode, cart } = state;
 
 	const theme = createMuiTheme({
 		Typography: {
@@ -44,10 +45,10 @@ const Layout = ({ title, description, children }) => {
 	});
 	const classes = useStyles();
 	const handleDarkMode = () => {
-		dispatch({type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON'});
+		dispatch({ type: darkMode ? "DARK_MODE_OFF" : "DARK_MODE_ON" });
 		const newDarkMode = !darkMode;
-		Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF');
-	}
+		Cookies.set("darkMode", newDarkMode ? "ON" : "OFF");
+	};
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -71,7 +72,15 @@ const Layout = ({ title, description, children }) => {
 							<Link>Shop</Link>
 						</NavLink>
 						<NavLink href="/cart" passHref>
-							<Link>Cart</Link>
+							<Link>
+								{cart.cartItems.length > 0 ? (
+									<Badge badgeContent={cart.cartItems.length} color="primary">
+										Cart
+									</Badge>
+								) : (
+									"Cart"
+								)}
+							</Link>
 						</NavLink>
 						<NavLink href="/login" passHref>
 							<Link>Login</Link>

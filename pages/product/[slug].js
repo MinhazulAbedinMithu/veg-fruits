@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
 	Button,
 	Card,
@@ -15,8 +15,11 @@ import Layout from "../../components/Layout";
 // import data from "../../utils/data";
 import db from "../../utils/db";
 import Product from "../../models/Product";
+import { Store } from "../../utils/Store";
+import axios from "axios";
 
 export default function ProductDetails(props) {
+	const {  dispatch } = useContext(Store);
 	const { product } = props;
 	// const router = useRouter();
 	// const { slug } = router.query;
@@ -28,6 +31,19 @@ export default function ProductDetails(props) {
 			</div>
 		);
 	}
+
+	const handleAddToCart = async () => {
+		const { data } = await axios.get(`/api/products/${product._id}`);
+		if (data.countStock <= 0) {
+			window.alert("Sorry, Product is out of stock !!!");
+			return;
+		}
+		dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity: 1 } });
+
+		// const newDarkMode = !darkMode;
+		// Cookies.set("darkMode", newDarkMode ? "ON" : "OFF");
+	};
+
 	return (
 		<Layout title={product.name} description={product.description}>
 			<NextLink href="/" passHref>
@@ -89,7 +105,12 @@ export default function ProductDetails(props) {
 								</Grid>
 							</ListItem>
 							<ListItem>
-								<Button fullWidth variant="contained" color="primary">
+								<Button
+									fullWidth
+									variant="contained"
+									color="primary"
+									onClick={handleAddToCart}
+								>
 									Add to Cart
 								</Button>
 							</ListItem>
